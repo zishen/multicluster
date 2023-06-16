@@ -175,6 +175,7 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	message.Answer = append(message.Answer, records...)
 	message.Extra = append(message.Extra, extra...)
 	w.WriteMsg(message)
+	log.Warningf("hahahaha==%+v", message)
 	return dns.RcodeSuccess, nil
 
 }
