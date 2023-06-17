@@ -127,7 +127,7 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 		truncated bool
 		err       error
 	)
-
+	log.Warningf("haha===ServeDNS zone:%+v", zone)
 	switch state.QType() {
 	case dns.TypeA:
 		records, truncated, err = plugin.A(ctx, &m, zone, state, nil, plugin.Options{})

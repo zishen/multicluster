@@ -14,6 +14,7 @@ const pluginName = "multicluster"
 func init() { plugin.Register(pluginName, setup) }
 
 func setup(c *caddy.Controller) error {
+	log.Warning("haha===setup multicluster")
 	multiCluster, err := ParseStanza(c)
 	if err != nil {
 		return plugin.Error(pluginName, err)
