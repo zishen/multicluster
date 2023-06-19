@@ -115,7 +115,8 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	qname := state.QName()
 
 	zone := plugin.Zones(m.Zones).Matches(qname)
-	log.Warningf("haha===ServeDNS qname:%+v", qname)
+	log.Warningf("haha===ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
+	log.Warningf("haha===ServeDNS dns.Msg:%+v", r)
 	if zone == "" {
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
 	}
