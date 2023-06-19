@@ -115,6 +115,7 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	qname := state.QName()
 
 	zone := plugin.Zones(m.Zones).Matches(qname)
+	log.Warningf("haha===ServeDNS qname:%+v", qname)
 	if zone == "" {
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
 	}
@@ -299,6 +300,7 @@ func (m *MultiCluster) namespaceExists(namespace string) bool {
 }
 
 func (m *MultiCluster) findServices(r recordRequest, zone string) (services []msg.Service, err error) {
+	log.Warningf("haha===findServices r:%+v,zone:%+v", r, zone)
 	if !wildcard(r.namespace) && !m.namespaceExists(r.namespace) {
 		return nil, errNoItems
 	}
@@ -335,7 +337,7 @@ func (m *MultiCluster) findServices(r recordRequest, zone string) (services []ms
 		serviceList = m.controller.SvcIndex(idx)
 		endpointsListFunc = func() []*object.Endpoints { return m.controller.EpIndex(idx) }
 	}
-
+	log.Warningf("haha===findServices serviceList:%+v, endpointsListFunc:%+v", serviceList, endpointsListFunc())
 	zonePath := msg.Path(zone, coredns)
 	for _, svc := range serviceList {
 		if !(match(r.namespace, svc.Namespace) && match(r.service, svc.Name)) {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	mcs "sigs.k8s.io/mcs-api/pkg/apis/v1alpha1"
 
+	"github.com/coredns/coredns/plugin/pkg/log"
 	discovery "k8s.io/api/discovery/v1"
 	discoveryV1beta1 "k8s.io/api/discovery/v1beta1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -100,7 +101,7 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discovery.EndpointSlice{}
-
+	log.Warningf("haha===EndpointSliceToEndpoints Endpoints:%+v", e)
 	return e, nil
 }
 
@@ -148,7 +149,7 @@ func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discoveryV1beta1.EndpointSlice{}
-
+	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	return e, nil
 }
 
