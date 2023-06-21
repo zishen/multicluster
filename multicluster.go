@@ -117,12 +117,13 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	zone := plugin.Zones(m.Zones).Matches(qname)
 	log.Warningf("haha===ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
 	log.Warningf("haha===ServeDNS CompareDomainName:%+v,CountLabel:%+v", dns.CompareDomainName("cluster.local.", qname), dns.CountLabel("cluster.local."))
-	log.Warningf("haha===ServeDNS dns.Msg:(%+v)", r)
-	if zone == "" {
+	log.Warningf("haha===ServeDNS dns.Msg:r(%+v)", r)
+	log.Warningf("haha===ServeDNS state: %+v", state.Req)
+	/*	if zone == "" {
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
-	}
+	}*/
 	zone = qname[len(qname)-len(zone):] // maintain case of original query
-	state.Zone = zone
+	state.Zone = "cluster.local"
 
 	var (
 		records   []dns.RR
