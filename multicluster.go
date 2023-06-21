@@ -123,7 +123,8 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
 	}*/
 	zone = qname[len(qname)-len(zone):] // maintain case of original query
-	state.Zone = "cluster.local"
+	zone = "cluster.local"
+	state.Zone = zone
 
 	var (
 		records   []dns.RR
