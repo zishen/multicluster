@@ -113,7 +113,7 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	state := request.Request{W: w, Req: r}
 
 	qname := state.QName()
-
+	log.Warningf("hehe===5== MultiCluster ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
 	zone := plugin.Zones(m.Zones).Matches(qname)
 	log.Warningf("hehe===ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
 	log.Warningf("hehe===ServeDNS CompareDomainName:%+v,CountLabel:%+v", dns.CompareDomainName("cluster.local.", qname), dns.CountLabel("cluster.local."))
