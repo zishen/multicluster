@@ -102,13 +102,14 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discovery.EndpointSlice{}
-
+	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	return e, nil
 }
 
 // EndpointSliceV1beta1ToEndpoints converts a v1beta1 *discovery.EndpointSlice to a *Endpoints.
 func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 	ends, ok := obj.(*discoveryV1beta1.EndpointSlice)
+	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints obj:%+v", obj)
 	if !ok {
 		return nil, fmt.Errorf("unexpected object %v", obj)
 	}
@@ -119,7 +120,7 @@ func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 		Index:     EndpointsKey(ends.Labels[mcs.LabelServiceName], ends.GetNamespace()),
 		Subsets:   make([]EndpointSubset, 1),
 	}
-
+	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	if len(ends.Ports) == 0 {
 		// Add sentinel if there are no ports.
 		e.Subsets[0].Ports = []EndpointPort{{Port: -1}}
