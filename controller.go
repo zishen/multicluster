@@ -85,7 +85,7 @@ func newController(ctx context.Context, k8sClient kubernetes.Interface, mcsClien
 	// enable Namespace watch
 	ctl.watchNamespace(ctx)
 
-	defer log.Warningf("haha===newController initEndpointsCache:%+v", opts.initEndpointsCache)
+	log.Warningf("haha===newController initEndpointsCache:%+v", opts.initEndpointsCache)
 	if opts.initEndpointsCache {
 		ctl.watchEndpointSlice(ctx)
 	}
