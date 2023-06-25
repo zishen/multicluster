@@ -57,6 +57,7 @@ func EndpointsKey(name, namespace string) string { return name + "." + namespace
 // EndpointSliceToEndpoints converts a *discovery.EndpointSlice to a *Endpoints.
 func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	ends, ok := obj.(*discovery.EndpointSlice)
+	log.Warningf("haha===EndpointSliceToEndpoints obj:%+v", obj)
 	if !ok {
 		return nil, fmt.Errorf("unexpected object %v", obj)
 	}
