@@ -119,9 +119,9 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	log.Warningf("haha===ServeDNS CompareDomainName:%+v,CountLabel:%+v", dns.CompareDomainName("cluster.local.", qname), dns.CountLabel("cluster.local."))
 	log.Warningf("haha===ServeDNS dns.Msg:r(%+v)", r)
 	log.Warningf("haha===ServeDNS state: %+v", state.Req)
-	/*	if zone == "" {
+	if zone == "" {
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
-	}*/
+	}
 	zone = qname[len(qname)-len(zone):] // maintain case of original query
 	zone = "cluster.local"
 	state.Zone = zone

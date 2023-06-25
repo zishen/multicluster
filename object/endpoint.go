@@ -68,7 +68,7 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 		Index:     EndpointsKey(ends.Labels[mcs.LabelServiceName], ends.GetNamespace()),
 		Subsets:   make([]EndpointSubset, 1),
 	}
-
+	defer log.Warningf("haha===EndpointSliceToEndpoints Endpoints:%+v", e)
 	if len(ends.Ports) == 0 {
 		// Add sentinel if there are no ports.
 		e.Subsets[0].Ports = []EndpointPort{{Port: -1}}
@@ -101,7 +101,7 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discovery.EndpointSlice{}
-	log.Warningf("haha===EndpointSliceToEndpoints Endpoints:%+v", e)
+
 	return e, nil
 }
 
