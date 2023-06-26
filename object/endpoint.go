@@ -57,7 +57,7 @@ func EndpointsKey(name, namespace string) string { return name + "." + namespace
 // EndpointSliceToEndpoints converts a *discovery.EndpointSlice to a *Endpoints.
 func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	ends, ok := obj.(*discovery.EndpointSlice)
-	log.Warningf("haha===EndpointSliceToEndpoints obj:%+v", obj)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceToEndpoints obj:%+v", obj)
 	if !ok {
 		return nil, fmt.Errorf("unexpected object %v", obj)
 	}
@@ -69,7 +69,7 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 		Index:     EndpointsKey(ends.Labels[mcs.LabelServiceName], ends.GetNamespace()),
 		Subsets:   make([]EndpointSubset, 1),
 	}
-	log.Warningf("haha===EndpointSliceToEndpoints Endpoints:%+v", e)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceToEndpoints Endpoints:%+v", e)
 	if len(ends.Ports) == 0 {
 		// Add sentinel if there are no ports.
 		e.Subsets[0].Ports = []EndpointPort{{Port: -1}}
@@ -102,14 +102,14 @@ func EndpointSliceToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discovery.EndpointSlice{}
-	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	return e, nil
 }
 
 // EndpointSliceV1beta1ToEndpoints converts a v1beta1 *discovery.EndpointSlice to a *Endpoints.
 func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 	ends, ok := obj.(*discoveryV1beta1.EndpointSlice)
-	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints obj:%+v", obj)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceV1beta1ToEndpoints obj:%+v", obj)
 	if !ok {
 		return nil, fmt.Errorf("unexpected object %v", obj)
 	}
@@ -120,7 +120,7 @@ func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 		Index:     EndpointsKey(ends.Labels[mcs.LabelServiceName], ends.GetNamespace()),
 		Subsets:   make([]EndpointSubset, 1),
 	}
-	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	if len(ends.Ports) == 0 {
 		// Add sentinel if there are no ports.
 		e.Subsets[0].Ports = []EndpointPort{{Port: -1}}
@@ -151,7 +151,7 @@ func EndpointSliceV1beta1ToEndpoints(obj meta.Object) (meta.Object, error) {
 	}
 
 	*ends = discoveryV1beta1.EndpointSlice{}
-	log.Warningf("haha===EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
+	log.Warningf("hehe===1==MultiCluster EndpointSliceV1beta1ToEndpoints Endpoints:%+v", e)
 	return e, nil
 }
 

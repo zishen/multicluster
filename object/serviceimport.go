@@ -39,11 +39,11 @@ func ToServiceImport(obj meta.Object) (meta.Object, error) {
 		Index:     ServiceKey(svc.GetName(), svc.GetNamespace()),
 		Type:      svc.Spec.Type,
 	}
-	defer log.Warningf("haha===ToServiceImport si:%+v", s)
+	defer log.Warningf("hehe===1==MultiCluster ToServiceImport si:%+v", s)
 	if len(svc.Spec.IPs) > 0 {
 		s.ClusterIPs = make([]string, len(svc.Spec.IPs))
 		copy(s.ClusterIPs, svc.Spec.IPs)
-		log.Warningf("haha===ToServiceImport ips:%+v", s.ClusterIPs)
+		log.Warningf("hehe===1==MultiCluster ToServiceImport ips:%+v", s.ClusterIPs)
 	}
 
 	if len(svc.Spec.Ports) > 0 {
