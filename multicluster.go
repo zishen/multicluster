@@ -113,17 +113,13 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 	state := request.Request{W: w, Req: r}
 
 	qname := state.QName()
-	log.Warningf("hehe===5== MultiCluster ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
 	zone := plugin.Zones(m.Zones).Matches(qname)
-	log.Warningf("hehe===ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
-	log.Warningf("hehe===ServeDNS CompareDomainName:%+v,CountLabel:%+v", dns.CompareDomainName("cluster.local.", qname), dns.CountLabel("cluster.local."))
-	log.Warningf("hehe===ServeDNS dns.Msg:r(%+v)", r)
-	log.Warningf("hehe===ServeDNS state: %+v", state.Req)
+	log.Warningf("hehe===1==MultiCluster ServeDNS qname:%+v,m.Zones:%+v", qname, m.Zones)
+	log.Warningf("hehe===1==MultiCluster ServeDNS CompareDomainName:%+v,CountLabel:%+v", dns.CompareDomainName("cluster.local.", qname), dns.CountLabel("cluster.local."))
 	if zone == "" {
 		return plugin.NextOrFailure(m.Name(), m.Next, ctx, w, r)
 	}
 	zone = qname[len(qname)-len(zone):] // maintain case of original query
-	zone = "cluster.local"
 	state.Zone = zone
 
 	var (
@@ -132,7 +128,7 @@ func (m MultiCluster) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns
 		truncated bool
 		err       error
 	)
-	log.Warningf("hehe===ServeDNS zone:%+v", zone)
+	log.Warningf("hehe===MultiCluster serveDNS zone:%+v", zone)
 	switch state.QType() {
 	case dns.TypeA:
 		records, truncated, err = plugin.A(ctx, &m, zone, state, nil, plugin.Options{})
@@ -240,7 +236,7 @@ func (m MultiCluster) Records(ctx context.Context, state request.Request, exact 
 	if dnsutil.IsReverse(state.Name()) > 0 {
 		return nil, errNoItems
 	}
-
+	log.Warningf("hehe===1== MultiCluster serveDNS namespace:%+v", r.namespace)
 	if !wildcard(r.namespace) && !m.namespaceExists(r.namespace) {
 		return nil, errNsNotExposed
 	}
@@ -304,11 +300,11 @@ func (m *MultiCluster) namespaceExists(namespace string) bool {
 }
 
 func (m *MultiCluster) findServices(r recordRequest, zone string) (services []msg.Service, err error) {
-	log.Warningf("hehe===findServices r:%+v,zone:%+v", r, zone)
+	log.Warningf("hehe===1== MultiCluster serveDNS r:%+v,zone:%+v", r, zone)
 	if !wildcard(r.namespace) && !m.namespaceExists(r.namespace) {
 		return nil, errNoItems
 	}
-
+	log.Warningf("hehe===1== MultiCluster serveDNS service:%+v", r.service)
 	// handle empty service name
 	if r.service == "" {
 		if m.namespaceExists(r.namespace) || wildcard(r.namespace) {
@@ -341,7 +337,7 @@ func (m *MultiCluster) findServices(r recordRequest, zone string) (services []ms
 		serviceList = m.controller.SvcIndex(idx)
 		endpointsListFunc = func() []*object.Endpoints { return m.controller.EpIndex(idx) }
 	}
-	log.Warningf("hehe===findServices serviceList:%+v, endpointsListFunc:%+v", serviceList, endpointsListFunc())
+	log.Warningf("hehe===1== MultiCluster serveDNS serviceList:%+v, endpointsListFunc:%+v", serviceList, endpointsListFunc())
 	zonePath := msg.Path(zone, coredns)
 	for _, svc := range serviceList {
 		if !(match(r.namespace, svc.Namespace) && match(r.service, svc.Name)) {
